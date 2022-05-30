@@ -1,5 +1,5 @@
 <p align="center">
-<img src="" height="150">
+<img src="https://raw.githubusercontent.com/dimitriharding/create-swagger-ui-with-sidebar/main/media/logo.svg" height="150">
 </p>
 
 <h1 align="center">
@@ -59,6 +59,10 @@ cd documentation && npm run dep && npm run dev
 ```
 
 ## How it works
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/dimitriharding/create-swagger-ui-with-sidebar/main/media/showcase.svg" height="400">
+</p>
 
 The base template is a [vite react-ts project](https://stackblitz.com/edit/vitejs-vite-g3xkbc?file=index.html&terminal=dev) that is very customizable.
 While you can edit all of the the source file, the intention of this is that you don't have to.
