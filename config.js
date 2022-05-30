@@ -41,7 +41,6 @@ export const sidebarConfig = {
 
 // Props that will be passed to the SwaggerUI component
 // See available props here: https://www.npmjs.com/package/swagger-ui-react
-// Please note that the url prop is controlled by definition.swagger.js and not config.swagger.js
 export const swaggerUIProps = {
     queryConfigEnabled: true,
 }
