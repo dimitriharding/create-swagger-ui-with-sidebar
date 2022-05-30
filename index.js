@@ -51,34 +51,62 @@ const packageJSON = (projectName) => {
     };
 };
 
+let projectName = "";
+let destination = "";
+
 program
     .name("create-swagger-ui-with-sidebar")
     .description("CLI to create a Swagger UI with Sidebar")
     .arguments("<project-directory>", "Name of the project", "documentation")
     .option("-c, --color <color>", "Main color for sidebar", "teal")
+    .option("-d, --develop", "Auto start the project", false)
+    .option("-b, --build", "Build the project, and remove template folder", false)
+    .option("-as, --auto-start", "Auto start the project", false)
     .version(package.version)
-    .action(async function (name) {
-        const destination = path.join("./", name);
-        const modulePath = __dirname;
-
-        const template = `${modulePath}/template`;
-        const config = `${modulePath}/config.js`;
-        const public = `${modulePath}/public`;
-
-        // Create the project directory
-        await copyFiles(template, destination + "/template");
-        await copyFiles(config, destination + "/config.js");
-        await copyFiles(public, destination + "/public");
-
-        fsx.writeFileSync(destination + "/package.json", JSON.stringify(packageJSON(name), null, 2));
-
-        console.log(colorsx.green.underline(`=> Swagger UI "${name}" project created!`));
-        console.log(`=> To start the project, run: ${colorsx.magenta(`cd ${name} && npm run dep && npm run dev`)}`);
-
-        // execSync(`npm run dep`, { cwd: destination, stdio: "inherit" });
-        // execSync(`npm run dev`, { cwd: destination, stdio: "inherit" });
-        // console.log("Project created in " + destination);
-        // console.log("Project running at http://localhost:3000");
+    .action(function (name) {
+        projectName = name;
     });
 
 program.parse();
+
+const options = program.opts();
+destination = path.join("./", projectName);
+
+function startDevelopmentServer() {
+    execSync(`npm run dep`, { cwd: destination, stdio: "inherit" });
+    execSync(`npm run dev`, { cwd: destination, stdio: "inherit" });
+}
+
+function buildProject() {
+    execSync(`npm run build`, { cwd: destination, stdio: "inherit" });
+    fsx.removeSync(destination + "/template");
+}
+
+async function main() {
+    const modulePath = __dirname;
+
+    const template = `${modulePath}/template`;
+    const config = `${modulePath}/config.js`;
+    const public = `${modulePath}/public`;
+
+    // Create the project directory
+    await copyFiles(template, destination + "/template");
+    await copyFiles(config, destination + "/config.js");
+    await copyFiles(public, destination + "/public");
+
+    fsx.writeFileSync(destination + "/package.json", JSON.stringify(packageJSON(projectName), null, 2));
+
+    console.log(colorsx.green.bold(`=> Swagger UI "${projectName}" project created!`));
+
+    if (options.autoStart) {
+        startDevelopmentServer();
+    } else {
+        console.log(`${colorsx.grey(`=> To start the project, run:`)} ${colorsx.magenta(`cd ${projectName} && npm run dep && npm run dev`)}`);
+    }
+}
+
+// Start the main function
+
+if (!options.develop && !options.build) main();
+if (options.develop) startDevelopmentServer();
+if (options.build && !options.develop) buildProject();
