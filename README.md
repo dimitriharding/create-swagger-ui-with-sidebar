@@ -15,16 +15,16 @@ Dashboard with sidebar for multiple Swagger definitions
 
 ---
 
-Execute
+## Usage
 
-```sh
-npx create-swagger-ui-with-sidebar documentation #folder name can be anything
+```bash
+$ npx create-swagger-ui-with-sidebar docs #folder name can be anything
 ```
 
 Navigate to folder, and install dependencies and then start development serve
 
-```sh
-cd documentation && npm run dep && npm run dev
+```bash
+$ cd docs && npm run dep && npm run dev
 ```
 
 > That's you can edit config and add definitions to public folder or reference remote files
@@ -42,21 +42,27 @@ cd documentation && npm run dep && npm run dev
 ## Folder structure
 
 ```bash
-|- :file_folder: root # Project directory
-    |- :file_folder: public/ # Files to be served at the root of the project
-        |- :file_folder: assets/ # Logo for sidebar and favicon for browser
-            |- :framed_picture: logo.svg
-            |- :framed_picture: favicon.ico
-        |- :file_folder: definitions/ # Local definitions
-            |- :memo: {definition}.{yaml|json}
-            |- :memo: ...
-            |- :memo: ...
-    |- :file_folder: template/ # The react project, normally you don't need to edit the files here
-        |- :file_folder: src # Source code for react app
-    |- :memo: config.js # Configuration file for entire project
-    |- :memo: package.json # Contains script to interact with template project
+|- 📁 root # Project directory
+    |- 📁 public/ # Files to be served at the root of the project
+        |- 📁 assets/ # Logo for sidebar and favicon for browser
+            |- 🖼 logo.svg
+            |- 🖼 favicon.ico
+        |- 📁 definitions/ # Local definitions
+            |- 📝 {definition}.{yaml|json}
+            |- 📝 ...
+            |- 📝 ...
+    |- 📁 template/ # The react project, normally you don't need to edit the files here
+        |- 📁 src # Source code for react app
+    |- 📝 config.js # Configuration file for entire project
+    |- 📝 package.json # Contains script to interact with template project
 
 ```
+
+## Motivation
+
+Wanting to document multiple AWS API gateway services where each service is also deployed on 3 environment (servers) in one location and make it easy to manage multiple swagger definition files.
+
+A sidebar seemed to be the best solution, so that's how this project was created as a weekend project.
 
 ## How it works
 
@@ -78,12 +84,12 @@ And finally, the sidebar was created with components from [Chakra UI](https://ch
 ## Road Map
 
 ```md
-[x] Create Swagger UI project with sidebar from on command
-[] Add brand/color options (based on Chakra UI colors)
-[] Expose customization for **config** file through CLI
-[] Expose customization for **Swagger UI** props through CLI
-[] Add continuation option for perviously created projects
-[] Add icons support for sidebar (maybe FontAwesome)
-[] Allow rebuild of existing project for config changes outside of development
-[] Delete template folder on build (optional)
+- [x] Create Swagger UI project with sidebar from on command
+- [] Add brand/color options (based on Chakra UI colors)
+- [] Expose customization for **config** file through CLI
+- [] Expose customization for **Swagger UI** props through CLI
+- [] Add continuation option for perviously created projects
+- [] Add icons support for sidebar (maybe FontAwesome)
+- [] Allow rebuild of existing project for config changes outside of development
+- [] Delete template folder on build (optional)
 ```
