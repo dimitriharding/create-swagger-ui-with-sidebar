@@ -1,6 +1,6 @@
 {
   "name": "create-swagger-ui-with-sidebar",
-  "version": "1.0.102",
+  "version": "1.0.4",
   "description": "",
   "bin": "index.js",
   "scripts": {
