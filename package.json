@@ -1,0 +1,22 @@
+{
+  "name": "create-swagger-ui-with-sidebar",
+  "version": "1.0.102",
+  "description": "",
+  "bin": "index.js",
+  "scripts": {
+    "predev": "node ./template/dev-check.js",
+    "dev": "cd ./template && npm run dev",
+    "build": "cd ./template && npm run build",
+    "preview": "cd ./template && npm run preview",
+    "prepreview": "npm run build",
+    "dep": "cd ./template && npm i"
+  },
+  "keywords": [],
+  "author": "Dimitri Harding",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^9.3.0",
+    "fs-extra": "^10.1.0"
+  }
+}
