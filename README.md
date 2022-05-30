@@ -18,7 +18,7 @@ Dashboard with sidebar for multiple Swagger definitions
 ## Usage
 
 ```bash
-$ npx create-swagger-ui-with-sidebar docs #folder name can be anything
+$ npx create-swagger-ui-with-sidebar@latest docs #folder name can be anything
 ```
 
 Navigate to folder, and install dependencies and then start development serve
