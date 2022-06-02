@@ -85,11 +85,11 @@ And finally, the sidebar was created with components from [Chakra UI](https://ch
 
 ```md
 - [x] Create Swagger UI project with sidebar from on command
-- [] Add brand/color options (based on Chakra UI colors)
+- [x] Add brand/color options (based on Chakra UI colors)
 - [] Expose customization for **config** file through CLI
 - [] Expose customization for **Swagger UI** props through CLI
 - [] Add continuation option for perviously created projects
 - [] Add icons support for sidebar (maybe FontAwesome)
-- [] Allow rebuild of existing project for config changes outside of development
+- [x] Allow rebuild of existing project for config changes outside of development
 - [] Delete template folder on build (optional)
 ```

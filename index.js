@@ -5,22 +5,13 @@ const { execSync } = require("child_process");
 const path = require("path");
 const fsx = require("fs-extra");
 const colorsx = require("colors");
+const { createConfig } = require('./util/helpers')
 
-const colors = {
-    blue: {
-        50: "#e3f2fd",
-        100: "#bbdefb",
-        200: "#90caf9",
-        300: "#64b5f6",
-        400: "#42a5f5",
-        500: "#2196f3",
-        600: "#1e88e5",
-        700: "#1976d2",
-        800: "#1565c0",
-        900: "#0d47a1",
-    },
-    undefined: "",
-};
+const modulePath = __dirname;
+
+// Path to template files from which the project will be created
+const template = `${modulePath}/template`;
+const public = `${modulePath}/public`;
 
 const copyFiles = (source, destination) => {
     return new Promise((resolve, reject) => {
@@ -59,6 +50,7 @@ program
     .description("CLI to create a Swagger UI with Sidebar")
     .arguments("<project-directory>", "Name of the project", "documentation")
     .option("-c, --color <color>", "Main color for sidebar", "teal")
+    .option("-t, --title <title>", "Title of the sidebar", "Swagger UI with Sidebar")
     .option("-d, --develop", "Auto start the project", false)
     .option("-b, --build", "Build the project, and remove template folder", false)
     .option("-as, --auto-start", "Auto start the project", false)
@@ -71,29 +63,37 @@ program.parse();
 
 const options = program.opts();
 destination = path.join("./", projectName);
+const templateDestination = path.join(destination, "/template");
+const publicDestination = path.join(destination, "/public");
 
 function startDevelopmentServer() {
     execSync(`npm run dep`, { cwd: destination, stdio: "inherit" });
     execSync(`npm run dev`, { cwd: destination, stdio: "inherit" });
 }
 
-function buildProject() {
+async function buildProject() {
+    // check if template folder exists
+    if (!fsx.existsSync(templateDestination)) {
+        console.log(colorsx.grey(`=> Template folder doesn't exist.`));
+        console.log(colorsx.grey(`=> Re-creating before building the project.`));
+        await copyFiles(template, templateDestination);
+    }
     execSync(`npm run build`, { cwd: destination, stdio: "inherit" });
-    fsx.removeSync(destination + "/template");
+    console.log(colorsx.green(`=> Swagger UI "${projectName}" project built!`));
+    console.log(colorsx.grey(`=> To serve the build, run: ${colorsx.magenta(`npx serve ${projectName}/build`)}`));
+    fsx.removeSync(templateDestination);
 }
 
 async function main() {
-    const modulePath = __dirname;
+    // Create the project directory, and copy the template files
+    await copyFiles(template, templateDestination);
+    await copyFiles(public, publicDestination);
 
-    const template = `${modulePath}/template`;
-    const config = `${modulePath}/config.js`;
-    const public = `${modulePath}/public`;
+    // Create the config file
+    const configData = createConfig(options);
+    fsx.writeFileSync(destination + "/config.js", configData);
 
-    // Create the project directory
-    await copyFiles(template, destination + "/template");
-    await copyFiles(config, destination + "/config.js");
-    await copyFiles(public, destination + "/public");
-
+    // Create the package.json file
     fsx.writeFileSync(destination + "/package.json", JSON.stringify(packageJSON(projectName), null, 2));
 
     console.log(colorsx.green.bold(`=> Swagger UI "${projectName}" project created!`));
@@ -106,7 +106,6 @@ async function main() {
 }
 
 // Start the main function
-
 if (!options.develop && !options.build) main();
 if (options.develop) startDevelopmentServer();
 if (options.build && !options.develop) buildProject();
