@@ -19,6 +19,7 @@ export const definitions = [
  */
 export const sidebarConfig = {
     title: "Swagger UI with Sidebar",
+    logoSrc: "/assets/logo.svg",
     // Extend the theme to include custom colors, fonts, etc
     extendTheme: {
         // Learn more about color theme: https://chakra-ui.com/docs/styled-system/theming/theme#colors

@@ -10,12 +10,13 @@ const spin = keyframes`
   to { transform: rotate(360deg); }
 `;
 
-export const Logo = (props: ImageProps) => {
+export const Logo = (props: ImageProps & { source?: string }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { source } = props;
 
   const animation = prefersReducedMotion
     ? undefined
     : `${spin} infinite 20s linear`;
 
-  return <Image src={"/assets/logo.svg"} {...props} />;
+  return <Image src={source ? source : "/assets/logo.svg"} {...props} />;
 };

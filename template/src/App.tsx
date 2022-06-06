@@ -21,6 +21,7 @@ function App() {
       <Grid minW="100vw" minH="100vh" px={4}>
         <HStack justify={"center"}>
           <SidebarLayout
+            logoSrc={sidebarConfig.logoSrc}
             definition={definition}
             onDefinitionClick={setDefinition}
             definitions={definitions}
