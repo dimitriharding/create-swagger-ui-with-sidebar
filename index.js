@@ -78,7 +78,7 @@ async function buildProject() {
         console.log(colorsx.grey(`=> Re-creating before building the project.`));
         await copyFiles(template, templateDestination);
     }
-    execSync(`npm i`, { cwd: destination, stdio: "inherit" });
+    execSync(`npm run dep`, { cwd: destination, stdio: "inherit" });
     execSync(`npm run build`, { cwd: destination, stdio: "inherit" });
     console.log(colorsx.green(`=> Swagger UI "${projectName}" project built!`));
     console.log(colorsx.grey(`=> To serve the build, run: ${colorsx.magenta(`npx serve ${projectName}/build`)}`));
