@@ -21,7 +21,11 @@ interface ISidebarLayoutProps {
   title: string;
   topNavItems?: React.ReactNode[];
   children: React.ReactNode;
-  logoSrc?: string;
+  logoInfo: {
+    src: string;
+    alt: string;
+    boxSize: string;
+  };
 }
 export function SidebarLayout({
   children,
@@ -30,7 +34,7 @@ export function SidebarLayout({
   definitions,
   definition,
   topNavItems,
-  logoSrc,
+  logoInfo,
 }: ISidebarLayoutProps) {
   const sidebar = useDisclosure();
   const SidebarContent = (props: BoxProps) => (
@@ -51,7 +55,7 @@ export function SidebarLayout({
       {...props}
     >
       <Flex flexDirection={"column"} px="4" py="5" align="center">
-        <Logo source={logoSrc} boxSize={"64px"} />
+        <Logo {...logoInfo} />
         <Text
           fontSize="2xl"
           mt={2}
